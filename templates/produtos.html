@@ -1,0 +1,103 @@
+<div class="aba-conteudo hidden" id="aba-produtos">
+  <div class="card">
+    <h2 class="card-title">Gerenciamento de Produtos</h2>
+
+    <form id="formProduto">
+      <input type="hidden" id="produtoId" />
+
+      <div class="form-group">
+        <label for="nomeProduto">Nome do Produto:</label>
+        <input
+          type="text"
+          id="nomeProduto"
+          name="nome"
+          class="form-control"
+          required
+        />
+      </div>
+
+      <div class="grid grid-cols-2">
+        <div class="form-group">
+          <label for="subcategoria">Subcategoria (opcional):</label>
+          <input
+            type="text"
+            id="subcategoria"
+            name="subcategoria"
+            class="form-control"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="valor">Valor (R$):</label>
+          <input
+            type="number"
+            id="valor"
+            name="valor"
+            step="0.01"
+            min="0"
+            class="form-control"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="ativoProduto">Status:</label>
+        <div>
+          <input type="checkbox" id="ativoProduto" name="ativo" checked />
+          <label for="ativoProduto">Ativo</label>
+        </div>
+      </div>
+
+      <div class="flex gap-2">
+        <button type="submit" id="btnSalvarProduto" class="btn btn-primary">
+          Cadastrar Produto
+        </button>
+        <button type="button" id="btnLimparProduto" class="btn btn-secondary">
+          Limpar
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card">
+    <h3 class="card-title">Lista de Produtos</h3>
+
+    <div class="flex gap-2 mb-4">
+      <input
+        type="text"
+        id="buscarProduto"
+        placeholder="Buscar produto..."
+        class="form-control"
+      />
+      <select id="filtroCategoria" class="form-control">
+        <option value="">Todas as categorias</option>
+        <option value="Papel">Papel</option>
+        <option value="Impressão">Impressão</option>
+        <option value="Encadernação">Encadernação</option>
+        <option value="Outro">Outro</option>
+      </select>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Subcategoria</th>
+            <th>Valor</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="tabelaProdutos">
+          <tr>
+            <td colspan="5" class="text-center">Carregando produtos...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script src="../static/js/produto.js"></script>

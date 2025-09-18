@@ -1,0 +1,162 @@
+<div class="aba-conteudo hidden" id="aba-vendas">
+  <div class="card">
+    <h2 class="card-title">Registro de Vendas</h2>
+
+    <form id="formVenda">
+      <div class="grid grid-cols-3">
+        <div class="form-group">
+          <label for="produtoVenda">Produto:</label>
+          <select id="produtoVenda" class="form-control" required>
+            <option value="">Selecione um produto</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="quantidadeVenda">Quantidade:</label>
+          <input
+            type="number"
+            id="quantidadeVenda"
+            class="form-control"
+            value="1"
+            min="1"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label>&nbsp;</label>
+          <button type="button" id="btnAdicionarItem" class="btn btn-primary">
+            Adicionar Item
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-3">
+        <div class="form-group">
+          <label for="vendedorVenda">Vendedor:</label>
+          <select id="vendedorVenda" class="form-control" required>
+            <option value="">Selecione um vendedor</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="metodoPagamento">Método de Pagamento:</label>
+          <select id="metodoPagamento" class="form-control" required>
+            <option value="">Selecione</option>
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de Débito">Cartão de Débito</option>
+            <option value="Cartão de Crédito">Cartão de Crédito</option>
+            <option value="PIX">PIX</option>
+            <option value="Outro">Outro</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="parcelasVenda">Parcelas:</label>
+          <input
+            type="number"
+            id="parcelasVenda"
+            class="form-control"
+            value="1"
+            min="1"
+            disabled
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="clienteVenda">Cliente (opcional):</label>
+        <select id="clienteVenda" class="form-control">
+          <option value="">Selecione um cliente</option>
+        </select>
+      </div>
+
+      <div class="card">
+        <h4 class="card-title">Itens da Venda</h4>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th>Preço Unitário</th>
+                <th>Subtotal</th>
+                <th>Ação</th>
+              </tr>
+            </thead>
+            <tbody id="itensVenda">
+              <tr>
+                <td colspan="5" class="text-center">Nenhum item adicionado</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="text-right">
+          <h3>Total: <span id="totalVenda">R$ 0,00</span></h3>
+        </div>
+      </div>
+
+      <div class="flex gap-2">
+        <button type="button" id="btnFinalizarVenda" class="btn btn-primary">
+          Finalizar Venda
+        </button>
+        <button type="button" id="btnLimparVenda" class="btn btn-secondary">
+          Limpar
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card">
+    <h3 class="card-title">Histórico de Vendas</h3>
+
+    <div class="grid grid-cols-3 mb-4">
+      <div class="form-group">
+        <label for="dataInicioVendas">Data Início:</label>
+        <input type="date" id="dataInicioVendas" class="form-control" />
+      </div>
+
+      <div class="form-group">
+        <label for="dataFimVendas">Data Fim:</label>
+        <input type="date" id="dataFimVendas" class="form-control" />
+      </div>
+
+      <div class="form-group">
+        <label for="filtroVendedor">Vendedor:</label>
+        <select id="filtroVendedor" class="form-control">
+          <option value="">Todos os vendedores</option>
+        </select>
+      </div>
+    </div>
+
+    <button type="button" id="btnFiltrarVendas" class="btn btn-primary mb-4">
+      Filtrar
+    </button>
+    <button type="button" id="btnExportarVendas" class="btn btn-secondary mb-4">
+      Exportar para Excel
+    </button>
+
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Itens</th>
+            <th>Total</th>
+            <th>Pagamento</th>
+            <th>Vendedor</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="tabelaVendas">
+          <tr>
+            <td colspan="6" class="text-center">Carregando vendas...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script src="../static/js/venda.js"></script>

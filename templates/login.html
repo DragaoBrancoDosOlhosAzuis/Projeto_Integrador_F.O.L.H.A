@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>F.O.L.H.A - Login</title>
+    <link rel="stylesheet" href="../static/css/login.css" />
+  </head>
+  <body>
+    <div class="login-container">
+      <div class="login-card">
+        <div class="login-logo">
+          <h1>F.O.L.H.A</h1>
+          <p>Sistema de Gestão Comercial</p>
+        </div>
+
+        <form class="login-form" id="formLogin">
+          <div class="form-group">
+            <label for="usuario">Usuário:</label>
+            <input type="text" id="usuario" name="usuario" required />
+          </div>
+
+          <div class="form-group">
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" name="senha" required />
+          </div>
+
+          <button type="submit" class="login-btn">Entrar</button>
+        </form>
+
+        <div class="login-footer">
+          <p>Entre com suas credenciais para acessar o sistema</p>
+        </div>
+
+        <div id="mensagemLogin" class="hidden"></div>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("formLogin")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const usuario = document.getElementById("usuario").value;
+          const senha = document.getElementById("senha").value;
+
+          try {
+            const response = await fetch("/api/login", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ usuario, senha }),
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+              localStorage.setItem("usuarioLogado", "true");
+              localStorage.setItem("usuarioNome", data.usuario.nome);
+              window.location.href = "/";
+            } else {
+              const mensagem = document.getElementById("mensagemLogin");
+              mensagem.textContent =
+                data.message || "Usuário ou senha inválidos";
+              mensagem.className = "login-error";
+              mensagem.classList.remove("hidden");
+            }
+          } catch (error) {
+            console.error("Erro no login:", error);
+            const mensagem = document.getElementById("mensagemLogin");
+            mensagem.textContent = "Erro de conexão com o servidor";
+            mensagem.className = "login-error";
+            mensagem.classList.remove("hidden");
+          }
+        });
+
+      // Verificar se já está logado
+      if (localStorage.getItem("usuarioLogado")) {
+        window.location.href = "/";
+      }
+    </script>
+  </body>
+</html>

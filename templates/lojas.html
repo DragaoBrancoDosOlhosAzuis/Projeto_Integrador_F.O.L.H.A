@@ -1,0 +1,95 @@
+<div class="aba-conteudo hidden" id="aba-lojas">
+  <div class="card">
+    <h2 class="card-title">Gerenciamento de Lojas</h2>
+
+    <form id="formLoja">
+      <input type="hidden" id="lojaId" />
+
+      <div class="form-group">
+        <label for="nomeLoja">Nome da Loja:</label>
+        <input
+          type="text"
+          id="nomeLoja"
+          name="nome"
+          class="form-control"
+          required
+        />
+      </div>
+
+      <div class="grid grid-cols-2">
+        <div class="form-group">
+          <label for="telefoneLoja">Telefone:</label>
+          <input
+            type="tel"
+            id="telefoneLoja"
+            name="telefone"
+            class="form-control"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="responsavel">Responsável:</label>
+          <input
+            type="text"
+            id="responsavel"
+            name="responsavel"
+            class="form-control"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="enderecoLoja">Endereço:</label>
+        <textarea
+          id="enderecoLoja"
+          name="endereco"
+          class="form-control"
+          rows="3"
+        ></textarea>
+      </div>
+
+      <div class="flex gap-2">
+        <button type="submit" id="btnSalvarLoja" class="btn btn-primary">
+          Cadastrar Loja
+        </button>
+        <button type="button" id="btnLimparLoja" class="btn btn-secondary">
+          Limpar
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card">
+    <h3 class="card-title">Lista de Lojas</h3>
+
+    <div class="form-group">
+      <input
+        type="text"
+        id="buscarLoja"
+        placeholder="Buscar loja..."
+        class="form-control"
+      />
+    </div>
+
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Telefone</th>
+            <th>Responsável</th>
+            <th>Endereço</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="tabelaLojas">
+          <tr>
+            <td colspan="5" class="text-center">Carregando lojas...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script src="../static/js/loja.js"></script>
