@@ -76,6 +76,27 @@ class Database:
 # Instância do banco de dados
 db = Database()
 
+# Rotas para servir arquivos estáticos
+@app.route('/static/<path:path>')
+def servir_static(path):
+    return app.send_static_file(path)
+
+@app.route('/js/<path:filename>')
+def servir_js_direct(filename):
+    return app.send_static_file(f'js/{filename}')
+
+@app.route('/css/<path:filename>')
+def servir_css(filename):
+    return app.send_static_file(f'css/{filename}')
+
+@app.route('/static/js/<path:filename>')
+def servir_js(filename):
+    return app.send_static_file(f'js/{filename}')
+
+@app.route('/static/css/<path:filename>')
+def servir_css_static(filename):
+    return app.send_static_file(f'css/{filename}')
+
 # Rotas de autenticação
 @app.route('/api/login', methods=['POST'])
 def login():
@@ -468,27 +489,33 @@ def login_page():
     return render_template('login.html')
 
 @app.route('/clientes')
-def clientes_page():
+@app.route('/clientes/<path:subpath>')
+def clientes_page(subpath=None):
     return render_template('clientes.html')
 
 @app.route('/funcionarios')
-def funcionarios_page():
+@app.route('/funcionarios/<path:subpath>')
+def funcionarios_page(subpath=None):
     return render_template('funcionarios.html')
 
 @app.route('/lojas')
-def lojas_page():
+@app.route('/lojas/<path:subpath>')
+def lojas_page(subpath=None):
     return render_template('lojas.html')
 
 @app.route('/produtos')
-def produtos_page():
+@app.route('/produtos/<path:subpath>')
+def produtos_page(subpath=None):
     return render_template('produtos.html')
 
 @app.route('/vendas')
-def vendas_page():
+@app.route('/vendas/<path:subpath>')
+def vendas_page(subpath=None):
     return render_template('vendas.html')
 
 @app.route('/servicos')
-def servicos_page():
+@app.route('/servicos/<path:subpath>')
+def servicos_page(subpath=None):
     return render_template('servicos.html')
 
 # Rota para servir templates individualmente
