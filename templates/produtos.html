@@ -1,103 +1,349 @@
-<div class="aba-conteudo hidden" id="aba-produtos">
-  <div class="card">
-    <h2 class="card-title">Gerenciamento de Produtos</h2>
-
-    <form id="formProduto">
-      <input type="hidden" id="produtoId" />
-
-      <div class="form-group">
-        <label for="nomeProduto">Nome do Produto:</label>
-        <input
-          type="text"
-          id="nomeProduto"
-          name="nome"
-          class="form-control"
-          required
-        />
-      </div>
-
-      <div class="grid grid-cols-2">
-        <div class="form-group">
-          <label for="subcategoria">Subcategoria (opcional):</label>
-          <input
-            type="text"
-            id="subcategoria"
-            name="subcategoria"
-            class="form-control"
-          />
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Produtos - F.O.L.H.A - Sistema de Gestão</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1>F.O.L.H.A</h1>
+                <p>Sistema de Gestão</p>
+            </div>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="vendas.html" class="nav-item">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Vendas</span>
+                </a>
+                <a href="lojas.html" class="nav-item">
+                    <i class="fas fa-store"></i>
+                    <span>Lojas</span>
+                </a>
+                <a href="funcionarios.html" class="nav-item">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Funcionários</span>
+                </a>
+                <a href="produtos.html" class="nav-item active">
+                    <i class="fas fa-boxes"></i>
+                    <span>Produtos</span>
+                </a>
+                <a href="#" class="nav-item logout" onclick="sair()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sair</span>
+                </a>
+            </div>
         </div>
 
-        <div class="form-group">
-          <label for="valor">Valor (R$):</label>
-          <input
-            type="number"
-            id="valor"
-            name="valor"
-            step="0.01"
-            min="0"
-            class="form-control"
-            required
-          />
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="top-bar">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="user-info">
+                    <div class="user-avatar">AD</div>
+                    <div>
+                        <div class="user-name">Admin User</div>
+                        <div class="user-role">Administrador</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="page-title">
+                    <h2>Gerenciamento de Produtos</h2>
+                </div>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Cadastro de Produto</h3>
+                            <div class="card-icon primary">
+                                <i class="fas fa-box"></i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form id="formProduto">
+                                <input type="hidden" id="produtoId" />
+
+                                <div class="form-group">
+                                    <label class="form-label" for="nomeProduto">Nome do Produto:</label>
+                                    <input
+                                        type="text"
+                                        id="nomeProduto"
+                                        name="nome"
+                                        class="form-control"
+                                        required
+                                        placeholder="Digite o nome do produto"
+                                    />
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label" for="subcategoria">Subcategoria (opcional):</label>
+                                        <input
+                                            type="text"
+                                            id="subcategoria"
+                                            name="subcategoria"
+                                            class="form-control"
+                                            placeholder="Ex: Colorido, A4, etc."
+                                        />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label" for="valor">Valor (R$):</label>
+                                        <input
+                                            type="number"
+                                            id="valor"
+                                            name="valor"
+                                            step="0.01"
+                                            min="0"
+                                            class="form-control"
+                                            required
+                                            placeholder="0,00"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Status:</label>
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <input type="checkbox" id="ativoProduto" name="ativo" checked style="width: auto;" />
+                                        <label for="ativoProduto" style="margin: 0;">Ativo</label>
+                                    </div>
+                                </div>
+
+                                <div class="flex gap-2" style="display: flex; gap: 0.5rem; margin-top: 1.5rem;">
+                                    <button type="submit" id="btnSalvarProduto" class="btn btn-primary">
+                                        <i class="fas fa-save"></i> Cadastrar Produto
+                                    </button>
+                                    <button type="button" id="btnLimparProduto" class="btn btn-secondary">
+                                        <i class="fas fa-broom"></i> Limpar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Resumo de Produtos</h3>
+                            <div class="card-icon success">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="stat-value">45</div>
+                            <div class="stat-label">Produtos cadastrados</div>
+                            
+                            <div style="margin-top: 1.5rem;">
+                                <div class="stat-value" style="font-size: 1.5rem;">38</div>
+                                <div class="stat-label">Produtos ativos</div>
+                            </div>
+                            
+                            <div class="stat-change positive" style="margin-top: 1rem;">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>5 novos produtos este mês</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Lista de Produtos</h3>
+                        <div class="filters" style="display: flex; gap: 1rem;">
+                            <input
+                                type="text"
+                                id="buscarProduto"
+                                placeholder="Buscar produto..."
+                                class="form-control"
+                                style="width: 250px;"
+                            />
+                            <select id="filtroCategoria" class="form-control" style="width: 200px;">
+                                <option value="">Todas as categorias</option>
+                                <option value="Papel">Papel</option>
+                                <option value="Impressão">Impressão</option>
+                                <option value="Encadernação">Encadernação</option>
+                                <option value="Outro">Outro</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-container">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Subcategoria</th>
+                                        <th>Valor</th>
+                                        <th>Status</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabelaProdutos">
+                                    <tr>
+                                        <td>Sulfite A4</td>
+                                        <td>Colorido</td>
+                                        <td>R$ 2,00</td>
+                                        <td><span class="status completed">Ativo</span></td>
+                                        <td>
+                                            <button class="btn btn-primary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+                                                <i class="fas fa-edit"></i> Editar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Couche A3</td>
+                                        <td>Brilhante</td>
+                                        <td>R$ 40,00</td>
+                                        <td><span class="status completed">Ativo</span></td>
+                                        <td>
+                                            <button class="btn btn-primary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+                                                <i class="fas fa-edit"></i> Editar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sulfite Preto e Branco</td>
+                                        <td>-</td>
+                                        <td>R$ 12,50</td>
+                                        <td><span class="status completed">Ativo</span></td>
+                                        <td>
+                                            <button class="btn btn-primary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+                                                <i class="fas fa-edit"></i> Editar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cartão Visita</td>
+                                        <td>Premium</td>
+                                        <td>R$ 35,00</td>
+                                        <td><span class="status pending">Inativo</span></td>
+                                        <td>
+                                            <button class="btn btn-primary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+                                                <i class="fas fa-edit"></i> Editar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Caneta Esferográfica</td>
+                                        <td>Azul</td>
+                                        <td>R$ 1,50</td>
+                                        <td><span class="status completed">Ativo</span></td>
+                                        <td>
+                                            <button class="btn btn-primary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+                                                <i class="fas fa-edit"></i> Editar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-
-      <div class="form-group">
-        <label for="ativoProduto">Status:</label>
-        <div>
-          <input type="checkbox" id="ativoProduto" name="ativo" checked />
-          <label for="ativoProduto">Ativo</label>
-        </div>
-      </div>
-
-      <div class="flex gap-2">
-        <button type="submit" id="btnSalvarProduto" class="btn btn-primary">
-          Cadastrar Produto
-        </button>
-        <button type="button" id="btnLimparProduto" class="btn btn-secondary">
-          Limpar
-        </button>
-      </div>
-    </form>
-  </div>
-
-  <div class="card">
-    <h3 class="card-title">Lista de Produtos</h3>
-
-    <div class="flex gap-2 mb-4">
-      <input
-        type="text"
-        id="buscarProduto"
-        placeholder="Buscar produto..."
-        class="form-control"
-      />
-      <select id="filtroCategoria" class="form-control">
-        <option value="">Todas as categorias</option>
-        <option value="Papel">Papel</option>
-        <option value="Impressão">Impressão</option>
-        <option value="Encadernação">Encadernação</option>
-        <option value="Outro">Outro</option>
-      </select>
     </div>
 
-    <div class="table-responsive">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>Subcategoria</th>
-            <th>Valor</th>
-            <th>Status</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody id="tabelaProdutos">
-          <tr>
-            <td colspan="5" class="text-center">Carregando produtos...</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/produto.js"></script>
 
-<script src="../static/js/produto.js"></script>
+    <script>
+        // Função para mostrar/ocultar sidebar em dispositivos móveis
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
+
+        // Função de logout
+        function sair() {
+            if (confirm('Tem certeza que deseja sair do sistema?')) {
+                alert('Logout realizado com sucesso!');
+                // Redirecionar para a página de login
+                // window.location.href = '/login';
+            }
+        }
+
+        // Configuração do formulário de produtos
+        document.addEventListener('DOMContentLoaded', function() {
+            const formProduto = document.getElementById('formProduto');
+            const btnLimparProduto = document.getElementById('btnLimparProduto');
+            const buscarProduto = document.getElementById('buscarProduto');
+            const filtroCategoria = document.getElementById('filtroCategoria');
+
+            // Evento de submit do formulário
+            formProduto.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const nomeProduto = document.getElementById('nomeProduto').value;
+                const valor = document.getElementById('valor').value;
+                
+                if (!nomeProduto || !valor) {
+                    alert('Por favor, preencha os campos obrigatórios.');
+                    return;
+                }
+                
+                // Aqui você implementaria a lógica para salvar o produto
+                alert(`Produto "${nomeProduto}" cadastrado com sucesso!`);
+                formProduto.reset();
+            });
+
+            // Evento para limpar formulário
+            btnLimparProduto.addEventListener('click', function() {
+                formProduto.reset();
+                document.getElementById('produtoId').value = '';
+                document.getElementById('btnSalvarProduto').innerHTML = '<i class="fas fa-save"></i> Cadastrar Produto';
+            });
+
+            // Evento para buscar produtos
+            buscarProduto.addEventListener('input', function() {
+                filtrarProdutos();
+            });
+
+            // Evento para filtrar por categoria
+            filtroCategoria.addEventListener('change', function() {
+                filtrarProdutos();
+            });
+
+            function filtrarProdutos() {
+                const termo = buscarProduto.value.toLowerCase();
+                const categoriaFiltro = filtroCategoria.value;
+                const linhas = document.querySelectorAll('#tabelaProdutos tr');
+                
+                linhas.forEach(linha => {
+                    const textoLinha = linha.textContent.toLowerCase();
+                    const subcategoria = linha.cells[1]?.textContent || '';
+                    
+                    const correspondeTermo = textoLinha.includes(termo);
+                    const correspondeCategoria = !categoriaFiltro || 
+                        (categoriaFiltro === 'Outro' && subcategoria === '-') ||
+                        (categoriaFiltro !== 'Outro' && subcategoria !== '-' && subcategoria.toLowerCase().includes(categoriaFiltro.toLowerCase()));
+                    
+                    if (correspondeTermo && correspondeCategoria) {
+                        linha.style.display = '';
+                    } else {
+                        linha.style.display = 'none';
+                    }
+                });
+            }
+
+            // Formatação automática do valor
+            document.getElementById('valor').addEventListener('blur', function() {
+                const valor = parseFloat(this.value);
+                if (!isNaN(valor)) {
+                    this.value = valor.toFixed(2);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

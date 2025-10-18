@@ -1,100 +1,511 @@
-<div class="aba-conteudo hidden" id="aba-funcionarios">
-  <div class="card">
-    <h2 class="card-title">Gerenciamento de Funcionários</h2>
-
-    <form id="formFuncionario">
-      <input type="hidden" id="funcionarioId" />
-
-      <div class="grid grid-cols-2">
-        <div class="form-group">
-          <label for="nomeFuncionario">Nome:</label>
-          <input
-            type="text"
-            id="nomeFuncionario"
-            name="nome"
-            class="form-control"
-            required
-          />
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Funcionários - F.O.L.H.A - Sistema de Gestão</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1>F.O.L.H.A</h1>
+                <p>Sistema de Gestão</p>
+            </div>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="vendas.html" class="nav-item">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Vendas</span>
+                </a>
+                <a href="lojas.html" class="nav-item">
+                    <i class="fas fa-store"></i>
+                    <span>Lojas</span>
+                </a>
+                <a href="funcionarios.html" class="nav-item active">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Funcionários</span>
+                </a>
+                <a href="produtos.html" class="nav-item">
+                    <i class="fas fa-boxes"></i>
+                    <span>Produtos</span>
+                </a>
+                <a href="#" class="nav-item logout" onclick="sair()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sair</span>
+                </a>
+            </div>
         </div>
 
-        <div class="form-group">
-          <label for="dataEntrada">Data de Entrada:</label>
-          <input
-            type="date"
-            id="dataEntrada"
-            name="data_entrada"
-            class="form-control"
-            required
-          />
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="top-bar">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="user-info">
+                    <div class="user-avatar">AD</div>
+                    <div>
+                        <div class="user-name">Admin User</div>
+                        <div class="user-role">Administrador</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="page-title">
+                    <h2>Gerenciamento de Funcionários</h2>
+                    <button class="btn btn-primary" onclick="exportarFuncionarios()">
+                        <i class="fas fa-file-export"></i> Exportar
+                    </button>
+                </div>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Cadastro de Funcionário</h3>
+                            <div class="card-icon primary">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form id="formFuncionario">
+                                <input type="hidden" id="funcionarioId" />
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label" for="nomeFuncionario">Nome:</label>
+                                        <input
+                                            type="text"
+                                            id="nomeFuncionario"
+                                            name="nome"
+                                            class="form-control"
+                                            required
+                                            placeholder="Digite o nome completo"
+                                        />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label" for="dataEntrada">Data de Entrada:</label>
+                                        <input
+                                            type="date"
+                                            id="dataEntrada"
+                                            name="data_entrada"
+                                            class="form-control"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label" for="cargo">Cargo:</label>
+                                        <select id="cargo" name="cargo" class="form-control">
+                                            <option value="Vendedor">Vendedor</option>
+                                            <option value="Gerente">Gerente</option>
+                                            <option value="Administrativo">Administrativo</option>
+                                            <option value="Entregador">Entregador</option>
+                                            <option value="Outro">Outro</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label" for="salario">Salário (R$):</label>
+                                        <input
+                                            type="number"
+                                            id="salario"
+                                            name="salario"
+                                            class="form-control"
+                                            step="0.01"
+                                            min="0"
+                                            placeholder="0,00"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label" for="telefoneFuncionario">Telefone:</label>
+                                        <input
+                                            type="tel"
+                                            id="telefoneFuncionario"
+                                            name="telefone"
+                                            class="form-control"
+                                            placeholder="(00) 00000-0000"
+                                        />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label" for="email">E-mail:</label>
+                                        <input
+                                            type="email"
+                                            id="email"
+                                            name="email"
+                                            class="form-control"
+                                            placeholder="email@exemplo.com"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Status:</label>
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <input type="checkbox" id="ativo" name="ativo" checked style="width: auto;" />
+                                        <label for="ativo" style="margin: 0;">Ativo</label>
+                                    </div>
+                                </div>
+
+                                <div class="flex gap-2" style="display: flex; gap: 0.5rem; margin-top: 1.5rem;">
+                                    <button type="submit" id="btnSalvarFuncionario" class="btn btn-primary">
+                                        <i class="fas fa-save"></i> Cadastrar Funcionário
+                                    </button>
+                                    <button type="button" id="btnLimparFuncionario" class="btn btn-secondary">
+                                        <i class="fas fa-broom"></i> Limpar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Resumo da Equipe</h3>
+                            <div class="card-icon success">
+                                <i class="fas fa-users"></i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="stat-value" id="totalFuncionarios">18</div>
+                            <div class="stat-label">Funcionários ativos</div>
+                            
+                            <div style="margin-top: 1.5rem;">
+                                <div class="stat-value" style="font-size: 1.5rem;">15</div>
+                                <div class="stat-label">Vendedores</div>
+                            </div>
+                            
+                            <div style="margin-top: 1rem;">
+                                <div class="stat-value" style="font-size: 1.5rem;">3</div>
+                                <div class="stat-label">Administrativos</div>
+                            </div>
+
+                            <div class="stat-change positive" style="margin-top: 1rem;">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>2 novos funcionários este mês</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Lista de Funcionários</h3>
+                        <div class="filters">
+                            <select id="filtroCargo" style="margin-right: 1rem;">
+                                <option value="">Todos os cargos</option>
+                                <option value="Vendedor">Vendedor</option>
+                                <option value="Gerente">Gerente</option>
+                                <option value="Administrativo">Administrativo</option>
+                                <option value="Entregador">Entregador</option>
+                            </select>
+                            <input
+                                type="text"
+                                id="buscarFuncionario"
+                                placeholder="Buscar funcionário..."
+                                class="form-control"
+                                style="width: 250px;"
+                            />
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-container">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Cargo</th>
+                                        <th>Data de Entrada</th>
+                                        <th>Salário</th>
+                                        <th>Telefone</th>
+                                        <th>Status</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabelaFuncionarios">
+                                    <tr>
+                                        <td>João Silva</td>
+                                        <td>Vendedor</td>
+                                        <td>15/03/2022</td>
+                                        <td>R$ 2.500,00</td>
+                                        <td>(11) 99999-9999</td>
+                                        <td><span class="status completed">Ativo</span></td>
+                                        <td>
+                                            <button class="btn btn-primary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+                                                <i class="fas fa-edit"></i> Editar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Maria Santos</td>
+                                        <td>Vendedora</td>
+                                        <td>22/07/2021</td>
+                                        <td>R$ 2.800,00</td>
+                                        <td>(11) 88888-8888</td>
+                                        <td><span class="status completed">Ativo</span></td>
+                                        <td>
+                                            <button class="btn btn-primary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+                                                <i class="fas fa-edit"></i> Editar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pedro Oliveira</td>
+                                        <td>Gerente</td>
+                                        <td>10/11/2022</td>
+                                        <td>R$ 4.200,00</td>
+                                        <td>(11) 77777-7777</td>
+                                        <td><span class="status completed">Ativo</span></td>
+                                        <td>
+                                            <button class="btn btn-primary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+                                                <i class="fas fa-edit"></i> Editar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ana Costa</td>
+                                        <td>Administrativo</td>
+                                        <td>05/05/2023</td>
+                                        <td>R$ 2.200,00</td>
+                                        <td>(11) 66666-6666</td>
+                                        <td><span class="status pending">Férias</span></td>
+                                        <td>
+                                            <button class="btn btn-primary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+                                                <i class="fas fa-edit"></i> Editar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Carlos Mendes</td>
+                                        <td>Entregador</td>
+                                        <td>18/09/2023</td>
+                                        <td>R$ 1.800,00</td>
+                                        <td>(11) 55555-5555</td>
+                                        <td><span class="status processing">Afastado</span></td>
+                                        <td>
+                                            <button class="btn btn-primary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">
+                                                <i class="fas fa-edit"></i> Editar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cards-grid" style="margin-top: 2rem;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Top Vendedores</h3>
+                            <a href="#" class="btn btn-primary">Ver ranking</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Vendedor</th>
+                                            <th>Vendas</th>
+                                            <th>Valor Total</th>
+                                            <th>Comissão</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Maria Santos</td>
+                                            <td>189</td>
+                                            <td>R$ 45.200,00</td>
+                                            <td>R$ 2.260,00</td>
+                                        </tr>
+                                        <tr>
+                                            <td>João Silva</td>
+                                            <td>142</td>
+                                            <td>R$ 38.750,00</td>
+                                            <td>R$ 1.937,50</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Pedro Oliveira</td>
+                                            <td>97</td>
+                                            <td>R$ 28.100,00</td>
+                                            <td>R$ 1.405,00</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Funcionários Recentes</h3>
+                            <a href="#" class="btn btn-primary">Ver todos</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Nome</th>
+                                            <th>Cargo</th>
+                                            <th>Data de Entrada</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Carlos Mendes</td>
+                                            <td>Entregador</td>
+                                            <td>18/09/2023</td>
+                                            <td><span class="status processing">Afastado</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ana Costa</td>
+                                            <td>Administrativo</td>
+                                            <td>05/05/2023</td>
+                                            <td><span class="status pending">Férias</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Pedro Oliveira</td>
+                                            <td>Gerente</td>
+                                            <td>10/11/2022</td>
+                                            <td><span class="status completed">Ativo</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-
-      <div class="grid grid-cols-2">
-        <div class="form-group">
-          <label for="cargo">Cargo:</label>
-          <select id="cargo" name="cargo" class="form-control">
-            <option value="Vendedor">Vendedor</option>
-            <option value="Gerente">Gerente</option>
-            <option value="Administrativo">Administrativo</option>
-            <option value="Outro">Outro</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="ativo">Status:</label>
-          <div>
-            <input type="checkbox" id="ativo" name="ativo" checked />
-            <label for="ativo">Ativo</label>
-          </div>
-        </div>
-      </div>
-
-      <div class="flex gap-2">
-        <button type="submit" id="btnSalvarFuncionario" class="btn btn-primary">
-          Cadastrar Funcionário
-        </button>
-        <button
-          type="button"
-          id="btnLimparFuncionario"
-          class="btn btn-secondary"
-        >
-          Limpar
-        </button>
-      </div>
-    </form>
-  </div>
-
-  <div class="card">
-    <h3 class="card-title">Lista de Funcionários</h3>
-
-    <div class="form-group">
-      <input
-        type="text"
-        id="buscarFuncionario"
-        placeholder="Buscar funcionário..."
-        class="form-control"
-      />
     </div>
 
-    <div class="table-responsive">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>Data de Entrada</th>
-            <th>Cargo</th>
-            <th>Status</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody id="tabelaFuncionarios">
-          <tr>
-            <td colspan="5" class="text-center">Carregando funcionários...</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/funcionario.js"></script>
 
-<script src="../static/js/funcionario.js"></script>
+    <script>
+        // Função para mostrar/ocultar sidebar em dispositivos móveis
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
+
+        // Função de logout
+        function sair() {
+            if (confirm('Tem certeza que deseja sair do sistema?')) {
+                alert('Logout realizado com sucesso!');
+                // Redirecionar para a página de login
+                // window.location.href = '/login';
+            }
+        }
+
+        // Função para exportar dados dos funcionários
+        function exportarFuncionarios() {
+            alert('Exportando dados dos funcionários...');
+            // Aqui você implementaria a lógica para exportar para Excel
+        }
+
+        // Configuração do formulário de funcionários
+        document.addEventListener('DOMContentLoaded', function() {
+            const formFuncionario = document.getElementById('formFuncionario');
+            const btnLimparFuncionario = document.getElementById('btnLimparFuncionario');
+            const buscarFuncionario = document.getElementById('buscarFuncionario');
+            const filtroCargo = document.getElementById('filtroCargo');
+
+            // Configurar data atual como padrão
+            document.getElementById('dataEntrada').valueAsDate = new Date();
+
+            // Evento de submit do formulário
+            formFuncionario.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const nomeFuncionario = document.getElementById('nomeFuncionario').value;
+                const dataEntrada = document.getElementById('dataEntrada').value;
+                const cargo = document.getElementById('cargo').value;
+                const salario = document.getElementById('salario').value;
+                const ativo = document.getElementById('ativo').checked;
+                
+                if (!nomeFuncionario || !dataEntrada) {
+                    alert('Por favor, preencha os campos obrigatórios.');
+                    return;
+                }
+                
+                // Aqui você implementaria a lógica para salvar o funcionário
+                alert(`Funcionário "${nomeFuncionario}" cadastrado com sucesso!`);
+                formFuncionario.reset();
+                document.getElementById('dataEntrada').valueAsDate = new Date();
+            });
+
+            // Evento para limpar formulário
+            btnLimparFuncionario.addEventListener('click', function() {
+                formFuncionario.reset();
+                document.getElementById('funcionarioId').value = '';
+                document.getElementById('dataEntrada').valueAsDate = new Date();
+                document.getElementById('btnSalvarFuncionario').innerHTML = '<i class="fas fa-save"></i> Cadastrar Funcionário';
+            });
+
+            // Evento para buscar funcionários
+            buscarFuncionario.addEventListener('input', function() {
+                filtrarFuncionarios();
+            });
+
+            // Evento para filtrar por cargo
+            filtroCargo.addEventListener('change', function() {
+                filtrarFuncionarios();
+            });
+
+            function filtrarFuncionarios() {
+                const termo = buscarFuncionario.value.toLowerCase();
+                const cargoFiltro = filtroCargo.value;
+                const linhas = document.querySelectorAll('#tabelaFuncionarios tr');
+                
+                linhas.forEach(linha => {
+                    const textoLinha = linha.textContent.toLowerCase();
+                    const cargoLinha = linha.cells[1]?.textContent || '';
+                    
+                    const correspondeTermo = textoLinha.includes(termo);
+                    const correspondeCargo = !cargoFiltro || cargoLinha === cargoFiltro;
+                    
+                    if (correspondeTermo && correspondeCargo) {
+                        linha.style.display = '';
+                    } else {
+                        linha.style.display = 'none';
+                    }
+                });
+            }
+
+            // Máscara para telefone
+            document.getElementById('telefoneFuncionario').addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 11) value = value.substring(0, 11);
+                
+                if (value.length > 10) {
+                    value = value.replace(/^(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+                } else if (value.length > 6) {
+                    value = value.replace(/^(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+                } else if (value.length > 2) {
+                    value = value.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
+                } else if (value.length > 0) {
+                    value = value.replace(/^(\d*)/, '($1');
+                }
+                
+                e.target.value = value;
+            });
+        });
+    </script>
+</body>
+</html>
