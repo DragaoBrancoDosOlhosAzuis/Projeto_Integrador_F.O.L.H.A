@@ -4,7 +4,106 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>F.O.L.H.A - Login</title>
-    <link rel="stylesheet" href="../static/css/login.css" />
+    <link rel="stylesheet" href="/static/css/login.css" />
+    <style>
+      .login-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 20px;
+      }
+
+      .login-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+      }
+
+      .login-logo {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .login-logo h1 {
+        color: #333;
+        margin: 0;
+        font-size: 2rem;
+        font-weight: bold;
+      }
+
+      .login-logo p {
+        color: #666;
+        margin: 0.5rem 0 0 0;
+      }
+
+      .login-form .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .login-form label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #333;
+        font-weight: 500;
+      }
+
+      .login-form input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+      }
+
+      .login-form input:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      .login-btn {
+        width: 100%;
+        padding: 0.75rem;
+        background: #667eea;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      .login-btn:hover {
+        background: #5a6fd8;
+      }
+
+      .login-footer {
+        text-align: center;
+        margin-top: 1.5rem;
+        color: #666;
+        font-size: 0.9rem;
+      }
+
+      .login-error {
+        background: #f8d7da;
+        color: #721c24;
+        padding: 0.75rem;
+        border-radius: 5px;
+        margin-top: 1rem;
+        text-align: center;
+        border: 1px solid #f5c6cb;
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
   </head>
   <body>
     <div class="login-container">
@@ -17,12 +116,12 @@
         <form class="login-form" id="formLogin">
           <div class="form-group">
             <label for="usuario">Usuário:</label>
-            <input type="text" id="usuario" name="usuario" required />
+            <input type="text" id="usuario" name="usuario" required value="admin" />
           </div>
 
           <div class="form-group">
             <label for="senha">Senha:</label>
-            <input type="password" id="senha" name="senha" required />
+            <input type="password" id="senha" name="senha" required value="admin" />
           </div>
 
           <button type="submit" class="login-btn">Entrar</button>
@@ -30,6 +129,7 @@
 
         <div class="login-footer">
           <p>Entre com suas credenciais para acessar o sistema</p>
+          <p><strong>Usuário:</strong> admin | <strong>Senha:</strong> admin</p>
         </div>
 
         <div id="mensagemLogin" class="hidden"></div>
@@ -46,6 +146,7 @@
           const senha = document.getElementById("senha").value;
 
           try {
+            console.log('Tentando login...');
             const response = await fetch("/api/login", {
               method: "POST",
               headers: {
@@ -55,10 +156,10 @@
             });
 
             const data = await response.json();
+            console.log('Resposta do login:', data);
 
             if (data.success) {
-              localStorage.setItem("usuarioLogado", "true");
-              localStorage.setItem("usuarioNome", data.usuario.nome);
+              localStorage.setItem("usuario", JSON.stringify(data.usuario));
               window.location.href = "/";
             } else {
               const mensagem = document.getElementById("mensagemLogin");
@@ -77,9 +178,12 @@
         });
 
       // Verificar se já está logado
-      if (localStorage.getItem("usuarioLogado")) {
+      if (localStorage.getItem("usuario")) {
         window.location.href = "/";
       }
+
+      // Auto-focus no campo de usuário
+      document.getElementById('usuario').focus();
     </script>
   </body>
 </html>
