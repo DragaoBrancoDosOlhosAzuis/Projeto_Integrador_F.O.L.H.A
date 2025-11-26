@@ -4,100 +4,175 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>F.O.L.H.A - Login</title>
-    <link rel="stylesheet" href="/static/css/login.css" />
+
+    <!-- Ícones -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
     <style>
-      .login-container {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 20px;
-      }
-
-      .login-card {
-        background: white;
-        padding: 2rem;
-        border-radius: 10px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        max-width: 400px;
-      }
-
-      .login-logo {
-        text-align: center;
-        margin-bottom: 2rem;
-      }
-
-      .login-logo h1 {
-        color: #333;
+      /* Fundo premium */
+      body {
         margin: 0;
-        font-size: 2rem;
-        font-weight: bold;
+        font-family: "Poppins", sans-serif;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: radial-gradient(circle at 20% 20%, #5b21b6, #1e1b4b);
+        overflow: hidden;
       }
 
-      .login-logo p {
-        color: #666;
-        margin: 0.5rem 0 0 0;
+      /* Orbs com blur suave */
+      .orb {
+        position: absolute;
+        width: 380px;
+        height: 380px;
+        background: rgba(255, 255, 255, 0.12);
+        filter: blur(120px);
+        border-radius: 50%;
+        animation: move 12s infinite alternate ease-in-out;
+      }
+      .orb2 {
+        background: rgba(99, 102, 241, 0.35);
+        left: -120px;
+        top: -80px;
+      }
+      .orb3 {
+        background: rgba(236, 72, 153, 0.35);
+        right: -120px;
+        bottom: -80px;
       }
 
-      .login-form .form-group {
-        margin-bottom: 1.5rem;
+      @keyframes move {
+        from {
+          transform: translateY(-40px);
+        }
+        to {
+          transform: translateY(40px);
+        }
       }
 
-      .login-form label {
-        display: block;
-        margin-bottom: 0.5rem;
-        color: #333;
+      /* Card central */
+      .login-card {
+        width: 380px;
+        padding: 2.7rem 2.2rem;
+        background: rgba(255, 255, 255, 0.14);
+        border-radius: 18px;
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.28);
+        text-align: center;
+        animation: fadeIn 0.8s ease;
+        box-sizing: border-box; /* Adicionado para incluir padding no cálculo da largura */
+      }
+
+      @keyframes fadeIn {
+        from {
+          transform: scale(0.96);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      /* Título */
+      .login-card h1 {
+        margin: 0;
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: 1.3px;
+        text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.813);
+      }
+
+      .login-card p {
+        margin-top: 0.35rem;
+        color: #e2e8f0;
+        font-size: 0.95rem;
+      }
+
+      /* Inputs - CORREÇÕES APLICADAS AQUI */
+      .input-group {
+        margin-top: 1.6rem;
+        text-align: left;
+        color: #fff;
+        font-size: 0.9rem;
         font-weight: 500;
       }
 
-      .login-form input {
-        width: 100%;
-        padding: 0.75rem;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        font-size: 1rem;
-        transition: border-color 0.3s;
+      .input-box {
+        position: relative;
+        margin-top: 0.45rem;
       }
 
-      .login-form input:focus {
-        outline: none;
-        border-color: #667eea;
+      .input-box i {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #e2e8f0; /* Cor mais clara para melhor visibilidade */
+        z-index: 2; /* Garantir que o ícone fique acima do input */
       }
 
-      .login-btn {
+      .input-box input {
         width: 100%;
-        padding: 0.75rem;
-        background: #667eea;
-        color: white;
+        padding: 0.85rem 1rem 0.85rem 45px;
+        border-radius: 10px;
         border: none;
-        border-radius: 5px;
+        outline: none;
+        font-size: 0.95rem;
+        color: #fff; /* Texto branco para melhor contraste */
+        background: rgba(255, 255, 255, 0.2); /* Fundo mais claro para melhor contraste */
+        backdrop-filter: blur(5px);
+        transition: 0.3s;
+        box-sizing: border-box; /* Garante que padding não ultrapasse a largura */
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1); /* Borda sutil para definição */
+      }
+
+      .input-box input::placeholder {
+        color: rgba(255, 255, 255, 0.7); /* Placeholder mais visível */
+      }
+
+      .input-box input:focus {
+        background: rgba(255, 255, 255, 0.25);
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3); /* Borda de foco mais visível */
+      }
+
+      /* Botão */
+      .login-btn {
+        margin-top: 1.8rem;
+        width: 100%;
+        background: linear-gradient(90deg, #6366f1, #8b5cf6);
+        padding: 0.85rem;
+        border: none;
+        border-radius: 10px;
         font-size: 1rem;
-        font-weight: 500;
+        color: #fff;
+        font-weight: 600;
         cursor: pointer;
-        transition: background 0.3s;
+        box-shadow: 0 4px 14px rgba(99, 102, 241, 0.38);
+        transition: 0.25s;
       }
 
       .login-btn:hover {
-        background: #5a6fd8;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 24px rgba(99, 102, 241, 0.48);
       }
 
-      .login-footer {
-        text-align: center;
-        margin-top: 1.5rem;
-        color: #666;
-        font-size: 0.9rem;
-      }
-
+      /* Mensagem de erro */
       .login-error {
-        background: #f8d7da;
-        color: #721c24;
-        padding: 0.75rem;
-        border-radius: 5px;
         margin-top: 1rem;
-        text-align: center;
-        border: 1px solid #f5c6cb;
+        background: rgba(255, 80, 80, 0.28);
+        border: 1px solid rgba(255, 80, 80, 0.45);
+        padding: 0.8rem;
+        border-radius: 10px;
+        backdrop-filter: blur(6px);
+        color: white;
+        font-weight: 500;
       }
 
       .hidden {
@@ -105,35 +180,47 @@
       }
     </style>
   </head>
+
   <body>
-    <div class="login-container">
-      <div class="login-card">
-        <div class="login-logo">
-          <h1>F.O.L.H.A</h1>
-          <p>Sistema de Gestão Comercial</p>
+    <!-- Efeitos visuais -->
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+
+    <div class="login-card">
+      <h1>F.O.L.H.A</h1>
+      <p>Sistema de Gestão Comercial</p>
+
+      <form id="formLogin">
+        <div class="input-group">
+          Usuário
+          <div class="input-box">
+            <i class="fas fa-user"></i>
+            <input
+              type="text"
+              id="usuario"
+              placeholder="Digite seu usuário"
+              required
+            />
+          </div>
         </div>
 
-        <form class="login-form" id="formLogin">
-          <div class="form-group">
-            <label for="usuario">Usuário:</label>
-            <input type="text" id="usuario" name="usuario" required value="admin" />
+        <div class="input-group">
+          Senha
+          <div class="input-box">
+            <i class="fas fa-lock"></i>
+            <input
+              type="password"
+              id="senha"
+              placeholder="Digite sua senha"
+              required
+            />
           </div>
-
-          <div class="form-group">
-            <label for="senha">Senha:</label>
-            <input type="password" id="senha" name="senha" required value="admin" />
-          </div>
-
-          <button type="submit" class="login-btn">Entrar</button>
-        </form>
-
-        <div class="login-footer">
-          <p>Entre com suas credenciais para acessar o sistema</p>
-          <p><strong>Usuário:</strong> admin | <strong>Senha:</strong> admin</p>
         </div>
 
-        <div id="mensagemLogin" class="hidden"></div>
-      </div>
+        <button class="login-btn" type="submit">Entrar</button>
+      </form>
+
+      <div id="mensagemLogin" class="hidden"></div>
     </div>
 
     <script>
@@ -146,44 +233,32 @@
           const senha = document.getElementById("senha").value;
 
           try {
-            console.log('Tentando login...');
             const response = await fetch("/api/login", {
               method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
+              headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ usuario, senha }),
             });
 
             const data = await response.json();
-            console.log('Resposta do login:', data);
 
             if (data.success) {
               localStorage.setItem("usuario", JSON.stringify(data.usuario));
               window.location.href = "/";
             } else {
-              const mensagem = document.getElementById("mensagemLogin");
-              mensagem.textContent =
-                data.message || "Usuário ou senha inválidos";
-              mensagem.className = "login-error";
-              mensagem.classList.remove("hidden");
+              const msg = document.getElementById("mensagemLogin");
+              msg.textContent = data.message || "Usuário ou senha inválidos";
+              msg.className = "login-error";
+              msg.classList.remove("hidden");
             }
           } catch (error) {
-            console.error("Erro no login:", error);
-            const mensagem = document.getElementById("mensagemLogin");
-            mensagem.textContent = "Erro de conexão com o servidor";
-            mensagem.className = "login-error";
-            mensagem.classList.remove("hidden");
+            const msg = document.getElementById("mensagemLogin");
+            msg.textContent = "Erro de conexão com o servidor";
+            msg.className = "login-error";
+            msg.classList.remove("hidden");
           }
         });
 
-      // Verificar se já está logado
-      if (localStorage.getItem("usuario")) {
-        window.location.href = "/";
-      }
-
-      // Auto-focus no campo de usuário
-      document.getElementById('usuario').focus();
+      if (localStorage.getItem("usuario")) window.location.href = "/";
     </script>
   </body>
-</html>
+</html>git add .
