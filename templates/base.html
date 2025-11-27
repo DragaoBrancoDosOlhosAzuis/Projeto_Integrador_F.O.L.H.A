@@ -1,73 +1,78 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}F.O.L.H.A - Sistema de Gestão{% endblock %}</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/static/css/style.css" />
     {% block extra_css %}{% endblock %}
-</head>
-<body>
+  </head>
+  <body>
     <div class="app-container">
-        <!-- Sidebar -->
-        <div class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <h1>F.O.L.H.A</h1>
-                <p>Sistema de Gestão</p>
+      <!-- Sidebar -->
+      <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <h1>F.O.L.H.A</h1>
+          <p>Sistema de Gestão</p>
+        </div>
+        <div class="nav-menu">
+          <a href="#" class="nav-item" onclick="mostrarAba('dashboard')">
+            <i class="fas fa-chart-line"></i>
+            <span>Dashboard</span>
+          </a>
+          <a href="#" class="nav-item" onclick="mostrarAba('vendas')">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Vendas</span>
+          </a>
+          <a href="#" class="nav-item" onclick="mostrarAba('lojas')">
+            <i class="fas fa-store"></i>
+            <span>Lojas</span>
+          </a>
+          <a href="#" class="nav-item" onclick="mostrarAba('lojas-fiado')">
+            <i class="fas fa-store"></i>
+            <span>Lojas - Fiado</span>
+          </a>
+          <a href="#" class="nav-item" onclick="mostrarAba('funcionarios')">
+            <i class="fas fa-user-tie"></i>
+            <span>Funcionários</span>
+          </a>
+          <a href="#" class="nav-item" onclick="mostrarAba('produtos')">
+            <i class="fas fa-boxes"></i>
+            <span>Produtos</span>
+          </a>
+          <a href="#" class="nav-item logout" onclick="sair()">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Sair</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <div class="top-bar">
+          <button class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="user-info">
+            <div class="user-avatar">AD</div>
+            <div>
+              <div class="user-name">Admin User</div>
+              <div class="user-role">Administrador</div>
             </div>
-            <div class="nav-menu">
-                <a href="#" class="nav-item" onclick="mostrarAba('dashboard')">
-                    <i class="fas fa-chart-line"></i>
-                    <span>Dashboard</span>
-                </a>
-                <a href="#" class="nav-item" onclick="mostrarAba('vendas')">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span>Vendas</span>
-                </a>
-                <a href="#" class="nav-item" onclick="mostrarAba('lojas')">
-                    <i class="fas fa-store"></i>
-                    <span>Lojas</span>
-                </a>
-                <a href="#" class="nav-item" onclick="mostrarAba('funcionarios')">
-                    <i class="fas fa-user-tie"></i>
-                    <span>Funcionários</span>
-                </a>
-                <a href="#" class="nav-item" onclick="mostrarAba('produtos')">
-                    <i class="fas fa-boxes"></i>
-                    <span>Produtos</span>
-                </a>
-                <a href="#" class="nav-item logout" onclick="sair()">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Sair</span>
-                </a>
-            </div>
+          </div>
         </div>
 
-        <!-- Main Content -->
-        <div class="main-content">
-            <div class="top-bar">
-                <button class="menu-toggle" id="menuToggle">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <div class="user-info">
-                    <div class="user-avatar">AD</div>
-                    <div>
-                        <div class="user-name">Admin User</div>
-                        <div class="user-role">Administrador</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="content">
-                {% block content %}{% endblock %}
-            </div>
-        </div>
+        <div class="content">{% block content %}{% endblock %}</div>
+      </div>
     </div>
 
     <script src="/static/js/main.js"></script>
     <script src="/static/js/api.js"></script>
     <script src="/static/js/formularios.js"></script>
     {% block extra_js %}{% endblock %}
-</body>
+  </body>
 </html>
