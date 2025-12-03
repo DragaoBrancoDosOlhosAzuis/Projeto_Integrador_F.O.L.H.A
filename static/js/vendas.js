@@ -644,5 +644,5 @@ observer.observe(document.getElementById("vendas"), {
 console.log("Módulo de vendas carregado e pronto");
 
 document.addEventListener("DOMContentLoaded", () => {
-  carregarVendasRecentes(); // <-- Aqui!
+  carregarVendasRecentes(); 
 });

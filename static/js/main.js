@@ -563,32 +563,71 @@ async function carregarDadosIniciais() {
   }
 }
 
-// Funções auxiliares para vendas (serão implementadas em vendas.js)
-function adicionarProduto() {
-  mostrarMensagem("Funcionalidade em desenvolvimento", "info");
-}
 
-function confirmarVenda() {
-  mostrarMensagem("Funcionalidade em desenvolvimento", "info");
-}
+async function exportarPlanilha() {
+    try {
+        const response = await fetch('/api/vendas/dados_exportacao');
+        if (!response.ok) {
+            throw new Error(`Erro ao carregar os dados: ${response.statusText}`);
+        }
+        const dadosVendas = await response.json();
+        
+        const filename = 'vendas'; 
 
-function adicionarProdutoFiado() {
-  mostrarMensagem("Funcionalidade em desenvolvimento", "info");
-}
+        const vendasArray = Object.values(dadosVendas["_default"] || {}).filter(item => item && typeof item === 'object');
+        
+        if (vendasArray.length === 0) {
+            alert("Não há dados de vendas para exportar.");
+            return;
+        }
 
-function confirmarVendaFiada() {
-  mostrarMensagem("Funcionalidade em desenvolvimento", "info");
-}
+        const headers = Object.keys(vendasArray[0]); 
+        
+        const headerRow = headers.join(';'); 
+        
+        const bodyRows = vendasArray.map(obj => 
+            headers.map(header => {
+                let value = obj[header];
+                
+                if (value === null || value === undefined) {
+                    value = ""; 
+                }
+                
+                let stringValue = String(value);
+                if (stringValue.includes(';') || stringValue.includes('"')) {
+                    return `"${stringValue.replace(/"/g, '""')}"`;
+                }
+                
+                return stringValue;
+            }).join(';')
+        ).join('\n');
 
-function exportarPlanilha(tipo) {
-  mostrarMensagem(`Exportação de ${tipo} em desenvolvimento`, "info");
-}
+        const csvContent = headerRow + '\n' + bodyRows;
+        
+        const blob = new Blob(["\uFEFF", csvContent], { type: 'text/csv;charset=utf-8;' }); 
+        const link = document.createElement("a");
 
+        if (link.download !== undefined) { 
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", filename + ".csv");
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } else {
+            alert("Seu navegador não suporta downloads automáticos. Por favor, copie o conteúdo e salve em um arquivo .csv.");
+        }
+        
+    } catch (error) {
+        console.error("Erro na exportação de planilha:", error);
+        alert("Não foi possível carregar os dados de vendas para exportação.");
+    }
+}
 function verDetalhesVenda(id) {
   mostrarMensagem(`Visualizando venda #${id}`, "info");
 }
 
-// Adicionar CSS para animações
 const style = document.createElement("style");
 style.textContent = `
     @keyframes slideIn {

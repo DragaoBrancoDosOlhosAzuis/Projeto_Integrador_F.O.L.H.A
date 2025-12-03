@@ -451,6 +451,22 @@ def produto(id):
             return jsonify({'success': False, 'message': 'Erro ao excluir produto'}), 500
 
 # Rotas para Vendas
+
+VENDAS_FILE = 'data/vendas.json' 
+
+@app.route('/api/vendas/dados_exportacao', methods=['GET'])
+def export_vendas_data():
+    try:
+        with open(VENDAS_FILE, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        return jsonify(data)
+    
+    except FileNotFoundError:
+        return jsonify({'error': 'Arquivo de vendas (vendas.json) não encontrado no servidor.'}), 404
+    except json.JSONDecodeError:
+        return jsonify({'error': 'Erro ao decodificar o arquivo vendas.json. Verifique a sintaxe.'}), 500
+
 @app.route('/api/vendas', methods=['GET', 'POST'])
 def vendas():
     if request.method == 'GET':
@@ -459,7 +475,6 @@ def vendas():
         
         vendas = vendas_db.all()
         
-        # Adicionar nome do vendedor às vendas
         funcionarios_dict = {f['id']: f['nome'] for f in funcionarios_db.all()}
         
         for venda in vendas:
@@ -537,6 +552,7 @@ def venda(id):
     venda['itens'] = itens
     
     return jsonify(venda)
+
 
 # Rotas para Serviços (Vendas Fiadas)
 @app.route('/api/servicos', methods=['GET', 'POST'])

@@ -5,14 +5,6 @@
 <div id="dashboard" class="aba-conteudo active">
     <div class="page-title">
         <h2>Dashboard</h2>
-        <div class="date-filter">
-            <select id="periodo" onchange="atualizarDashboard()">
-                <option value="hoje">Hoje</option>
-                <option value="semana">Esta Semana</option>
-                <option value="mes" selected>Este Mês</option>
-                <option value="trimestre">Este Trimestre</option>
-            </select>
-        </div>
     </div>
 
     <div class="cards-grid">
@@ -25,7 +17,7 @@
             </div>
             <div class="card-body">
                 <div class="stat-value" id="totalVendas">R$ 0,00</div>
-                <div class="stat-label">Receita total do mês</div>
+                <div class="stat-label">Receita total do dia</div>
                 <div class="stat-change positive">
                     <i class="fas fa-arrow-up"></i>
                     <span>Carregando...</span>
@@ -59,7 +51,7 @@
             </div>
             <div class="card-body">
                 <div class="stat-value" id="totalProdutos">0</div>
-                <div class="stat-label">Itens vendidos este mês</div>
+                <div class="stat-label">Itens vendidos hoje</div>
                 <div class="stat-change positive">
                     <i class="fas fa-arrow-up"></i>
                     <span>Carregando...</span>
@@ -128,7 +120,7 @@
 <div id="vendas" class="aba-conteudo">
     <div class="page-title">
         <h2>Registrar Venda</h2>
-        <button class="btn btn-primary" onclick="exportarPlanilha('vendas')">Exportar Planilha</button>
+        <button class="btn btn-primary" onclick="exportarPlanilha()">Exportar Planilha</button>
     </div>
     
     <div class="card">
