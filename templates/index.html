@@ -147,11 +147,7 @@
           <select class="form-control" id="vendedor">
             <option value="">Selecione o vendedor</option>
           </select>
-          <small
-            ><a href="#" onclick="mostrarAba('funcionarios')"
-              >Cadastrar novo funcionário</a
-            ></small
-          >
+          <small><a class="botao"href="#" onclick="mostrarAba('funcionarios')">Cadastrar novo funcionário</a></small>
         </div>
 
         <div class="form-group">
@@ -229,9 +225,7 @@
 <div id="lojas-fiado" class="aba-conteudo">
   <div class="page-title">
     <h2>Registrar Venda Fiada</h2>
-    <button class="btn btn-primary" onclick="exportarPlanilha('lojas')">
-      Exportar Planilha
-    </button>
+
   </div>
 
   <div class="card">
@@ -249,11 +243,7 @@
         <select class="form-control" id="loja-fiado">
           <option value="">Selecione a loja</option>
         </select>
-        <small
-          ><a href="#" onclick="mostrarAba('lojas-fiado')"
-            >Cadastrar nova loja</a
-          ></small
-        >
+       
       </div>
 
       <div id="produtos-fiado">
@@ -841,13 +831,6 @@
           class="form-control"
           style="width: 250px"
         />
-        <select id="filtroCategoria" class="form-control" style="width: 200px">
-          <option value="">Todas as categorias</option>
-          <option value="Papel">Papel</option>
-          <option value="Impressão">Impressão</option>
-          <option value="Encadernação">Encadernação</option>
-          <option value="Outro">Outro</option>
-        </select>
       </div>
     </div>
     <div class="card-body">
