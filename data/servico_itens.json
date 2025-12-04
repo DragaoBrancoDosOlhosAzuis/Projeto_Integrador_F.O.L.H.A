@@ -1,0 +1,1 @@
+{"_default": {"1": {"id": 1, "servico_id": 1, "produto_id": 4, "quantidade": 20, "valor_unitario": 35.0, "subtotal": 700.0}, "2": {"id": 2, "servico_id": 2, "produto_id": 1, "quantidade": 100, "valor_unitario": 2.0, "subtotal": 200.0}}}
