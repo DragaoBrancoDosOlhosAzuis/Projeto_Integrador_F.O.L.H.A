@@ -406,7 +406,7 @@ function atualizarTabelaVendas(vendas) {
 
   if (vendas.length === 0) {
     tbody.innerHTML =
-      '<tr><td colspan="7" class="text-center">Nenhuma venda encontrada</td></tr>';
+      '<tr><td colspan="6" class="text-center">Nenhuma venda encontrada</td></tr>';
     return;
   }
 
@@ -417,7 +417,6 @@ function atualizarTabelaVendas(vendas) {
     tr.innerHTML = `
             <td>#${venda.id.toString().padStart(5, "0")}</td>
             <td>${venda.data}</td>
-            <td>${venda.itens ? venda.itens.length : 0} itens</td>
             <td>${Utils.formatarMoeda(venda.total)}</td>
             <td>${venda.vendedor_nome}</td>
             <td>${formatarMetodoPagamento(venda.metodo_pagamento)}</td>
@@ -644,5 +643,5 @@ observer.observe(document.getElementById("vendas"), {
 console.log("Módulo de vendas carregado e pronto");
 
 document.addEventListener("DOMContentLoaded", () => {
-  carregarVendasRecentes(); 
+  carregarVendasRecentes();
 });

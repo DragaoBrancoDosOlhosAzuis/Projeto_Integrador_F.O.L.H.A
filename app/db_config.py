@@ -11,6 +11,7 @@ class Database:
             'lojas': 'lojas.json',
             'produtos': 'produtos.json',
             'vendas': 'vendas.json',
+            'venda_itens': 'venda_itens.json',
             'servicos': 'servicos.json'
         }
         

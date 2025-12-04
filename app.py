@@ -4,6 +4,7 @@ import json
 import os
 from datetime import datetime
 import logging
+from collections import defaultdict
 from tinydb import TinyDB, Query
 from tinydb.operations import increment, decrement
 
@@ -451,7 +452,6 @@ def produto(id):
             return jsonify({'success': False, 'message': 'Erro ao excluir produto'}), 500
 
 # Rotas para Vendas
-
 VENDAS_FILE = 'data/vendas.json' 
 
 @app.route('/api/vendas/dados_exportacao', methods=['GET'])
@@ -472,15 +472,36 @@ def vendas():
     if request.method == 'GET':
         vendas_db = db.get_table('vendas')
         funcionarios_db = db.get_table('funcionarios')
-        
+        venda_itens_db = db.get_table('venda_itens')
         vendas = vendas_db.all()
         
         funcionarios_dict = {f['id']: f['nome'] for f in funcionarios_db.all()}
         
-        for venda in vendas:
-            venda['vendedor_nome'] = funcionarios_dict.get(venda.get('vendedor_id'), 'N/A')
+        # 1. 💡 NOVO: AGREGAR A CONTAGEM DE PRODUTOS
+        contagem_produtos = defaultdict(int)
+        todos_itens = venda_itens_db.all()
         
-        return jsonify(vendas)
+        for item in todos_itens:
+            # Assumindo que você quer a soma da quantidade total de produtos por transação
+            venda_id = item.get('venda_id')
+            quantidade = item.get('quantidade', 0)
+            contagem_produtos[venda_id] += quantidade 
+            
+        # 2. ANEXAR A CONTAGEM E O NOME DO VENDEDOR
+        vendas_formatadas = []
+        for venda in vendas:
+            # NOTA: Precisamos garantir que estamos usando o 'id' correto (TinyDB doc_id ou campo 'id')
+            venda_id = venda.get('id', venda.doc_id) 
+            
+            venda_data = dict(venda)
+            venda_data['vendedor_nome'] = funcionarios_dict.get(venda.get('vendedor_id'), 'N/A')
+            
+            # 💡 NOVO CAMPO PARA O FRONTEND
+            venda_data['num_produtos'] = contagem_produtos[venda_id]
+            
+            vendas_formatadas.append(venda_data)
+        
+        return jsonify(vendas_formatadas)
     
     elif request.method == 'POST':
         try:
@@ -647,6 +668,65 @@ def dashboard_resumo():
     except Exception as e:
         logger.error(f"Erro ao carregar resumo do dashboard: {e}")
         return jsonify({'error': 'Erro ao carregar resumo'}), 500
+    
+
+def calcular_produtos_mais_vendidos(top_n=5):
+    """
+    Calcula os produtos mais vendidos, utilizando as tabelas TinyDB.
+    """
+    try:
+
+        venda_itens_db = db.get_table('venda_itens') 
+        produtos_db = db.get_table('produtos')       
+        
+        venda_itens_lista = venda_itens_db.all() 
+        produtos_lista = produtos_db.all()
+
+    except Exception as e:
+        logger.error(f"Erro ao carregar dados das tabelas TinyDB: {e}")
+        return []
+
+    produtos_map = {p.get('id'): p for p in produtos_lista if p.get('id') is not None}
+    
+    vendas_agregadas = defaultdict(lambda: {'vendas': 0, 'valor_total': 0.0})
+    
+    for item in venda_itens_lista:
+        produto_id = item.get('produto_id')
+        quantidade = item.get('quantidade', 0)
+        subtotal = item.get('subtotal', item.get('quantidade', 0) * item.get('valor_unitario', 0.0))
+        
+        if produto_id in produtos_map:
+            vendas_agregadas[produto_id]['vendas'] += quantidade
+            vendas_agregadas[produto_id]['valor_total'] += subtotal
+
+    resultados_completos = []
+    for produto_id, dados_venda in vendas_agregadas.items():
+        produto_info = produtos_map.get(produto_id)
+        
+        if produto_info:
+            resultados_completos.append({
+                "nome": produto_info.get('nome', f'ID {produto_id}'),
+                "subcategoria": produto_info.get('subcategoria', 'N/D'),
+                "vendas": dados_venda['vendas'], 
+                "valor_total": round(dados_venda['valor_total'], 2)
+            })
+
+    resultados_ordenados = sorted(
+        resultados_completos,
+        key=lambda x: x['vendas'],
+        reverse=True
+    )
+    
+    return resultados_ordenados[:top_n]
+
+@app.route('/api/mais-vendidos', methods=['GET'])
+def get_mais_vendidos():
+    try:
+        top_produtos = calcular_produtos_mais_vendidos(top_n=10)
+        return jsonify(top_produtos)
+    except Exception as e:
+        print(f"Erro no endpoint /api/mais-vendidos: {e}")
+        return jsonify({"erro": "Não foi possível calcular os produtos mais vendidos."}), 500
 
 # Rotas de debug
 @app.route('/api/debug/tables')
