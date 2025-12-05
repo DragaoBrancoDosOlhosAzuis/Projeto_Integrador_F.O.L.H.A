@@ -410,9 +410,7 @@ async function carregarContasReceber() {
       tr.innerHTML = `
                 <td>${loja.nome}</td>
                 <td>${Utils.formatarMoeda(totalFiado)}</td>
-                <td>${
-                  ultimaVenda ? formatarDataParaBr(ultimaVenda.data) : "Nenhuma"
-                }</td>
+                <td>${Utils.formatarData(ultimaVenda.data)}</td>
                 <td>
                     <button class="btn btn-primary btn-sm" onclick="verDetalhesLoja(${
                       loja.id

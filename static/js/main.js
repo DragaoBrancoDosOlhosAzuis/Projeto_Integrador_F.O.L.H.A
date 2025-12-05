@@ -23,21 +23,6 @@ async function verificarAutenticacao() {
   }
 }
 
-function atualizarInterfaceUsuario() {
-  if (usuarioLogado) {
-    const userAvatar = document.querySelector(".user-avatar");
-    const userName = document.querySelector(".user-name");
-    const userRole = document.querySelector(".user-role");
-
-    if (userAvatar)
-      userAvatar.textContent = usuarioLogado.nome.substring(0, 2).toUpperCase();
-    if (userName) userName.textContent = usuarioLogado.nome;
-    if (userRole)
-      userRole.textContent =
-        usuarioLogado.nivel === "admin" ? "Administrador" : "Usuário";
-  }
-}
-
 function sair() {
   localStorage.removeItem("usuario");
   window.location.href = "/login";

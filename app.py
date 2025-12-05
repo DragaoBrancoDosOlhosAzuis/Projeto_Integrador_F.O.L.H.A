@@ -78,7 +78,7 @@ class Database:
                     'id': 2,
                     'nome': 'Maria Santos',
                     'data_entrada': '2021-07-22',
-                    'cargo': 'Vendedora',
+                    'cargo': 'Vendedor',
                     'salario': 2800.00,
                     'telefone': '(11) 88888-8888',
                     'email': 'maria@empresa.com',
